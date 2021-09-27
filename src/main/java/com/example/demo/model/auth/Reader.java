@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Data
-public class User {
+public class Reader {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.auth.JwtResponse;
-import com.example.demo.model.auth.User;
+import com.example.demo.model.auth.Reader;
 import com.example.demo.service.JwtService;
 import com.example.demo.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,28 +30,28 @@ public class AuthController {
     private IUserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+    public ResponseEntity<?> login(@RequestBody Reader reader) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(reader.getEmail(), reader.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User currentUser = userService.findByEmail(user.getEmail());
+        Reader currentReader = userService.findByEmail(reader.getEmail());
 
-        return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), currentUser.getTelephoneNumber(), userDetails.getUsername(), currentUser.getFullName(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwt, currentReader.getId(), currentReader.getTelephoneNumber(), userDetails.getUsername(), currentReader.getFullName(), userDetails.getAuthorities()));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        Iterable<User> users = userService.findAll();
-        for (User currentUser : users) {
-            if (currentUser.getEmail().equals(user.getEmail())) {
+    public ResponseEntity<Reader> register(@RequestBody Reader reader) {
+        Iterable<Reader> users = userService.findAll();
+        for (Reader currentReader : users) {
+            if (currentReader.getEmail().equals(reader.getEmail())) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
-        if (user.getAvt() == null) {
-            user.setAvt("https://firebasestorage.googleapis.com/v0/b/demoupload-d290c.appspot.com/o/avatar.jpg?alt=media&token=9ac8b329-207a-4c5b-9581-98d5269b160d");
+        if (reader.getAvt() == null) {
+            reader.setAvt("https://firebasestorage.googleapis.com/v0/b/demoupload-d290c.appspot.com/o/avatar.jpg?alt=media&token=9ac8b329-207a-4c5b-9581-98d5269b160d");
         }
-        userService.save(user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        userService.save(reader);
+        return new ResponseEntity<>(reader, HttpStatus.OK);
     }
 }

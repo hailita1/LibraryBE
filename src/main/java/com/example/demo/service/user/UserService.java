@@ -1,7 +1,7 @@
 package com.example.demo.service.user;
 
 import com.example.demo.model.auth.Role;
-import com.example.demo.model.auth.User;
+import com.example.demo.model.auth.Reader;
 import com.example.demo.model.auth.UserPrinciple;
 import com.example.demo.repository.IUserRepository;
 import com.example.demo.service.role.IRoleService;
@@ -30,25 +30,25 @@ public class UserService implements IUserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Iterable<User> findAll() {
+    public Iterable<Reader> findAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public Optional<User> findById(Long id) {
+    public Optional<Reader> findById(Long id) {
         return userRepository.findById(id);
     }
 
     @Override
-    public User save(User user) {
-        if (user.getRoles() == null) {
+    public Reader save(Reader reader) {
+        if (reader.getRoles() == null) {
             Role role = roleService.findByName(ROLE_USER.toString());
             Set<Role> roles = new HashSet<>();
             roles.add(role);
-            user.setRoles(roles);
+            reader.setRoles(roles);
         } else {
             boolean check = false;
-            for (Role role1 : user.getRoles()) {
+            for (Role role1 : reader.getRoles()) {
                 if (role1.getName().equals("ROLE_USER")) {
                     check = false;
                 } else {
@@ -58,17 +58,17 @@ public class UserService implements IUserService {
                     Role role = roleService.findByName(ROLE_ADMIN.toString());
                     Set<Role> roles = new HashSet<>();
                     roles.add(role);
-                    user.setRoles(roles);
+                    reader.setRoles(roles);
                 } else {
                     Role role = roleService.findByName(ROLE_USER.toString());
                     Set<Role> roles = new HashSet<>();
                     roles.add(role);
-                    user.setRoles(roles);
+                    reader.setRoles(roles);
                 }
             }
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        reader.setPassword(passwordEncoder.encode(reader.getPassword()));
+        return userRepository.save(reader);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(username));
+        Optional<Reader> userOptional = Optional.ofNullable(userRepository.findByEmail(username));
         if (!userOptional.isPresent()) {
             throw new UsernameNotFoundException(username);
         }
@@ -86,7 +86,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public Reader findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 }

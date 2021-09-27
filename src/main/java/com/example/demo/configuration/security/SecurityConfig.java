@@ -5,7 +5,7 @@ import com.example.demo.configuration.custom.RestAuthenticationEntryPoint;
 import com.example.demo.configuration.filter.JwtAuthenticationFilter;
 import com.example.demo.model.auth.Role;
 import com.example.demo.model.auth.RoleName;
-import com.example.demo.model.auth.User;
+import com.example.demo.model.auth.Reader;
 import com.example.demo.service.role.RoleService;
 import com.example.demo.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @PostConstruct
     public void init() {
-        List<User> users = (List<User>) userService.findAll();
+        List<Reader> readers = (List<Reader>) userService.findAll();
         List<Role> roleList = (List<Role>) roleService.findAll();
         if (roleList.isEmpty()) {
             Role roleAdmin = new Role();
@@ -80,8 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             roleCoach.setName(RoleName.ROLE_USER.toString());
             roleService.save(roleCoach);
         }
-        if (users.isEmpty()) {
-            User admin = new User();
+        if (readers.isEmpty()) {
+            Reader admin = new Reader();
             Set<Role> roles = new HashSet<>();
             roles.add(new Role(1L, RoleName.ROLE_ADMIN.toString()));
             admin.setEmail("admin");
