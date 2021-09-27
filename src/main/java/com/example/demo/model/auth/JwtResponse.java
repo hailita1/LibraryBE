@@ -10,23 +10,23 @@ public class JwtResponse {
     private String type = "Bearer";
     private String email;
     private String name;
-    private String telephoneNumber;
+    private String phone;
     private Collection<? extends GrantedAuthority> roles;
 
     public String getTelephoneNumber() {
-        return telephoneNumber;
+        return phone;
     }
 
     public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
+        this.phone = telephoneNumber;
     }
 
-    public JwtResponse(String accessToken, Long id, String telephoneNumber, String email, String name, Collection<? extends GrantedAuthority> roles) {
+    public JwtResponse(String accessToken, Long id, String phone, String email, String name, Collection<? extends GrantedAuthority> roles) {
         this.token = accessToken;
         this.email = email;
         this.roles = roles;
         this.name = name;
-        this.telephoneNumber = telephoneNumber;
+        this.phone = phone;
         this.id = id;
     }
 

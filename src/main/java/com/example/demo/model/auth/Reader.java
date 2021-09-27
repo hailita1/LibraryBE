@@ -12,26 +12,35 @@ public class Reader {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String email;
+    @Column
+    private String userName;
 
-    @Column(nullable = false)
+    @Column
     private String password;
 
-    @Column(nullable = false)
+    @Column
     private String fullName;
 
     @Column
-    private String telephoneNumber;
+    private Boolean gender;
 
     @Column
-    private String provider;
+    private String email;
 
     @Column
-    private java.util.Date create_at;
+    private String phone;
 
     @Column
-    private java.util.Date update_at;
+    private String address;
+
+    @Column
+    private String catalog;
+
+    @Column
+    private String status;
+
+    @Column
+    private String studentCode;
 
     @Column
     private String avt;
