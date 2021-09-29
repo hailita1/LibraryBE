@@ -44,7 +44,7 @@ public class AuthController {
     public ResponseEntity<Reader> register(@RequestBody Reader reader) {
         Iterable<Reader> users = userService.findAll();
         for (Reader currentReader : users) {
-            if (currentReader.getEmail().equals(reader.getEmail())) {
+            if (currentReader.getUserName().equals(reader.getUserName())) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
