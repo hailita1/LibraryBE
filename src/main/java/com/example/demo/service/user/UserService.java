@@ -46,26 +46,6 @@ public class UserService implements IUserService {
             Set<Role> roles = new HashSet<>();
             roles.add(role);
             reader.setRoles(roles);
-        } else {
-            boolean check = false;
-            for (Role role1 : reader.getRoles()) {
-                if (role1.getName().equals("ROLE_USER")) {
-                    check = false;
-                } else {
-                    check = true;
-                }
-                if (check == true) {
-                    Role role = roleService.findByName(ROLE_ADMIN.toString());
-                    Set<Role> roles = new HashSet<>();
-                    roles.add(role);
-                    reader.setRoles(roles);
-                } else {
-                    Role role = roleService.findByName(ROLE_USER.toString());
-                    Set<Role> roles = new HashSet<>();
-                    roles.add(role);
-                    reader.setRoles(roles);
-                }
-            }
         }
         reader.setPassword(passwordEncoder.encode(reader.getPassword()));
         return userRepository.save(reader);
