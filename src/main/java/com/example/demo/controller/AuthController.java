@@ -31,13 +31,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Reader reader) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(reader.getEmail(), reader.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(reader.getUserName(), reader.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Reader currentReader = userService.findByEmail(reader.getEmail());
 
-        return ResponseEntity.ok(new JwtResponse(jwt, currentReader.getId(), currentReader.getPhone(), userDetails.getUsername(), currentReader.getFullName(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwt, currentReader.getId(), currentReader.getPhone(), currentReader.getEmail(), currentReader.getFullName(), userDetails.getAuthorities()));
     }
 
     @PostMapping("/register")

@@ -12,7 +12,7 @@ public class Reader {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String userName;
 
     @Column
@@ -24,7 +24,7 @@ public class Reader {
     @Column
     private Boolean gender;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
     @Column
@@ -39,7 +39,7 @@ public class Reader {
     @Column
     private String status;
 
-    @Column
+    @Column(unique = true)
     private String studentCode;
 
     @Column

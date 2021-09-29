@@ -26,7 +26,7 @@ public class Document {
     private Long visitNumber;
 
     @Column
-    private Date update_at;
+    private Date update_At;
 
     @Column
     private String fileName;
@@ -38,9 +38,14 @@ public class Document {
     @JoinColumn(name = "id_category")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "id_publishing_company")
+    private PublishingCompany publishingCompany;
+
     @ManyToMany(targetEntity = Author.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "documents_authors",
             joinColumns = {@JoinColumn(name = "id_document")},
             inverseJoinColumns = {@JoinColumn(name = "id_author")})
     private List<Author> author;
+
 }
