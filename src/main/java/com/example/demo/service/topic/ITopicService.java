@@ -1,4 +1,7 @@
 package com.example.demo.service.topic;
 
-public interface ITopicService {
+import com.example.demo.model.Topic;
+import com.example.demo.service.IGeneralService;
+
+public interface ITopicService extends IGeneralService<Topic> {
 }

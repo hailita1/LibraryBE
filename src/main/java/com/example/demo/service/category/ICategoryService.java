@@ -1,4 +1,7 @@
 package com.example.demo.service.category;
 
-public interface ICategoryService {
+import com.example.demo.model.Category;
+import com.example.demo.service.IGeneralService;
+
+public interface ICategoryService extends IGeneralService<Category> {
 }

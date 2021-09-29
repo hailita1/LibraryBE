@@ -1,4 +1,7 @@
 package com.example.demo.service.document;
 
-public interface IDocumentService {
+import com.example.demo.model.Document;
+import com.example.demo.service.IGeneralService;
+
+public interface IDocumentService extends IGeneralService<Document> {
 }

@@ -1,9 +1,9 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.Topic;
+import com.example.demo.model.PublishingCompany;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ITopic extends JpaRepository<Topic, Long> {
+public interface IPublishingCompanyRepository extends JpaRepository<PublishingCompany, Long> {
 }
