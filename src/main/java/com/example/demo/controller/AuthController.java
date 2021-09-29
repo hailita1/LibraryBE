@@ -42,8 +42,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Reader> register(@RequestBody Reader reader) {
-        Iterable<Reader> users = userService.findAll();
-        for (Reader currentReader : users) {
+        Iterable<Reader> listReader = userService.findAll();
+        for (Reader currentReader : listReader) {
             if (currentReader.getUserName().equals(reader.getUserName())) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

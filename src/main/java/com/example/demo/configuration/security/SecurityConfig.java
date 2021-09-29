@@ -85,6 +85,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             Set<Role> roles = new HashSet<>();
             roles.add(new Role(1L, RoleName.ROLE_ADMIN.toString()));
             admin.setEmail("admin");
+            admin.setUserName("admin");
+            admin.setCatalog("Quản trị viên");
             admin.setFullName("admin");
             admin.setPhone("0396355470");
             admin.setRoles(roles);
