@@ -45,6 +45,9 @@ public class Reader {
     @Column
     private String avt;
 
+    @Column(unique = true)
+    private String idCard;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},

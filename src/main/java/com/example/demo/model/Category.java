@@ -14,6 +14,9 @@ public class Category {
     @Column
     private String name;
 
+    @Column
+    private String image;
+
     @ManyToOne
     @JoinColumn(name = "id_topic")
     private Topic topic;
