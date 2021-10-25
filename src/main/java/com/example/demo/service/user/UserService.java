@@ -1,7 +1,7 @@
 package com.example.demo.service.user;
 
 import com.example.demo.model.auth.Role;
-import com.example.demo.model.auth.Reader;
+import com.example.demo.model.auth.User;
 import com.example.demo.model.auth.UserPrinciple;
 import com.example.demo.repository.IUserRepository;
 import com.example.demo.service.role.IRoleService;
@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.example.demo.model.auth.RoleName.ROLE_ADMIN;
 import static com.example.demo.model.auth.RoleName.ROLE_USER;
 
 @Service
@@ -30,25 +29,25 @@ public class UserService implements IUserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Iterable<Reader> findAll() {
+    public Iterable<User> findAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public Optional<Reader> findById(Long id) {
+    public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
     @Override
-    public Reader save(Reader reader) {
-        if (reader.getRoles() == null) {
+    public User save(User user) {
+        if (user.getRoles() == null) {
             Role role = roleService.findByName(ROLE_USER.toString());
             Set<Role> roles = new HashSet<>();
             roles.add(role);
-            reader.setRoles(roles);
+            user.setRoles(roles);
         }
-        reader.setPassword(passwordEncoder.encode(reader.getPassword()));
-        return userRepository.save(reader);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Reader> userOptional = Optional.ofNullable(userRepository.findByEmail(username));
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(username));
         if (!userOptional.isPresent()) {
             throw new UsernameNotFoundException(username);
         }
@@ -66,7 +65,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Reader findByEmail(String email) {
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 }
