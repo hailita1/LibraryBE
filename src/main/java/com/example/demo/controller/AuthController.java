@@ -31,11 +31,11 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User currentUser = userService.findByEmail(user.getEmail());
+        User currentUser = userService.findByUserName(user.getUserName());
 
         return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), currentUser.getPhone(), currentUser.getEmail(), currentUser.getFullName(), userDetails.getAuthorities()));
     }
@@ -44,7 +44,7 @@ public class AuthController {
     public ResponseEntity<User> register(@RequestBody User user) {
         Iterable<User> listUser = userService.findAll();
         for (User currentUser : listUser) {
-            if (currentUser.getEmail().equals(user.getUserName())) {
+            if (currentUser.getUserName().equals(user.getUserName())) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }

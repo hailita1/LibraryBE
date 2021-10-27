@@ -57,7 +57,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(username));
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findByUserName(username));
         if (!userOptional.isPresent()) {
             throw new UsernameNotFoundException(username);
         }
@@ -67,5 +67,10 @@ public class UserService implements IUserService {
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findByUserName(String userName) {
+        return userRepository.findByUserName(userName);
     }
 }

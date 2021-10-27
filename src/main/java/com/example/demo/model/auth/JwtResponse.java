@@ -8,22 +8,43 @@ public class JwtResponse {
     private Long id;
     private String token;
     private String type = "Bearer";
-    private String email;
+    private String userName;
     private String name;
     private String phone;
-    private Collection<? extends GrantedAuthority> roles;
 
-    public String getTelephoneNumber() {
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPhone() {
         return phone;
     }
 
-    public void setTelephoneNumber(String telephoneNumber) {
-        this.phone = telephoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public JwtResponse(String accessToken, Long id, String phone, String email, String name, Collection<? extends GrantedAuthority> roles) {
+    public void setRoles(Collection<? extends GrantedAuthority> roles) {
+        this.roles = roles;
+    }
+
+    private Collection<? extends GrantedAuthority> roles;
+
+    public JwtResponse(String accessToken, Long id, String phone, String userName, String name, Collection<? extends GrantedAuthority> roles) {
         this.token = accessToken;
-        this.email = email;
+        this.userName = userName;
         this.roles = roles;
         this.name = name;
         this.phone = phone;
@@ -62,12 +83,12 @@ public class JwtResponse {
         this.type = tokenType;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserName(String email) {
+        this.userName = email;
     }
 
     public Collection<? extends GrantedAuthority> getRoles() {
