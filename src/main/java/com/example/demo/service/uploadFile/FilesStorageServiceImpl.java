@@ -1,6 +1,6 @@
 package com.example.demo.service.uploadFile;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService {
-
     private final Path root = Paths.get("uploads");
 
     @Override
