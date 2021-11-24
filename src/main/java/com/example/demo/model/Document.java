@@ -33,6 +33,9 @@ public class Document {
 
     @Column
     private String image;
+    
+    @Column
+    private String mainAuthor;
 
     @ManyToOne
     @JoinColumn(name = "id_category")

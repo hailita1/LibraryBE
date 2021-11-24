@@ -12,12 +12,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -30,6 +29,9 @@ public class AuthController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
@@ -55,6 +57,53 @@ public class AuthController {
         }
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/accounts")
+    public ResponseEntity<Iterable<User>> getAllUser() {
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    }
+
+
+    @PostMapping("/accounts")
+    public ResponseEntity<User> getUser(@RequestBody Long user) {
+        Optional<User> userOptional = userService.findById(user);
+        return userOptional.map(user1 -> new ResponseEntity<>(user1, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/accounts")
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        Optional<User> userOptional = userService.findById(user.getId());
+        return userOptional.map(user1 -> {
+            user1.setId(user1.getId());
+            user1.setEmail(user.getEmail());
+            user1.setFullName(user.getFullName());
+            user1.setAvt(user.getAvt());
+            userService.save(user1);
+            return new ResponseEntity<>(user1, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/updatePassword")
+    public ResponseEntity<User> updatePassword(@RequestBody User user) {
+        Optional<User> userOptional = userService.findById(user.getId());
+        return userOptional.map(user1 -> {
+            user1.setId(user1.getId());
+            user1.setPassword(passwordEncoder.encode(user.getPassword()));
+            userService.save(user1);
+            return new ResponseEntity<>(user1, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+
+    @DeleteMapping("/accounts/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable Long id) {
+        Optional<User> userOptional = userService.findById(id);
+        return userOptional.map(user -> {
+            userService.remove(id);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/deleteList")
