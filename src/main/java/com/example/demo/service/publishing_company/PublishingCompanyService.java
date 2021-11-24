@@ -5,6 +5,7 @@ import com.example.demo.repository.IPublishingCompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,5 +31,14 @@ public class PublishingCompanyService implements IPublishingCompanyService {
     @Override
     public void remove(Long id) {
         publishingCompanyRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteList(List<Long> model) {
+        if (model != null) {
+            for (int i = 0; i < model.size(); i++) {
+                publishingCompanyRepository.deleteById(model.get(i));
+            }
+        }
     }
 }

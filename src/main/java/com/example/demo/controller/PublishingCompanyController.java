@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -53,5 +54,11 @@ public class PublishingCompanyController {
             publishingCompanyService.remove(id);
             return new ResponseEntity<>(publishingCompany, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/deleteList")
+    public ResponseEntity deleteListCategory(@RequestBody List<Long> id) {
+        publishingCompanyService.deleteList(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

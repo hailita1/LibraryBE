@@ -5,6 +5,7 @@ import com.example.demo.repository.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +31,11 @@ public class RoleService implements IRoleService {
     @Override
     public void remove(Long id) {
         roleRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteList(List<Long> model) {
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.example.demo.repository.IAuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,5 +31,14 @@ public class AuthorService implements IAuthorService {
     @Override
     public void remove(Long id) {
         authorRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteList(List<Long> model) {
+        if (model != null) {
+            for (int i = 0; i < model.size(); i++) {
+                authorRepository.deleteById(model.get(i));
+            }
+        }
     }
 }

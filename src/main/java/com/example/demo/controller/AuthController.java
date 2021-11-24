@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 public class AuthController {
@@ -53,5 +55,11 @@ public class AuthController {
         }
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PostMapping("/deleteList")
+    public ResponseEntity deleteListCategory(@RequestBody List<Long> id) {
+        userService.deleteList(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

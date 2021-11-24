@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -50,5 +51,11 @@ public class TopicController {
             topicService.remove(id);
             return new ResponseEntity<>(topic, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/deleteList")
+    public ResponseEntity deleteListCategory(@RequestBody List<Long> id) {
+        topicService.deleteList(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -60,5 +61,11 @@ public class DocumentController {
             documentService.remove(id);
             return new ResponseEntity<>(Document, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/deleteList")
+    public ResponseEntity deleteListCategory(@RequestBody List<Long> id) {
+        documentService.deleteList(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -72,5 +73,14 @@ public class UserService implements IUserService {
     @Override
     public User findByUserName(String userName) {
         return userRepository.findByUserName(userName);
+    }
+
+    @Override
+    public void deleteList(List<Long> model) {
+        if (model != null) {
+            for (int i = 0; i < model.size(); i++) {
+                userRepository.deleteById(model.get(i));
+            }
+        }
     }
 }
