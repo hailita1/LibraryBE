@@ -2,11 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Document;
 import com.example.demo.service.document.IDocumentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +17,7 @@ import java.util.Optional;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/documents")
+@Slf4j
 public class DocumentController {
     @Autowired
     private IDocumentService documentService;
@@ -24,8 +28,11 @@ public class DocumentController {
     }
 
     @PostMapping
-    public ResponseEntity<Document> createNewDocument(@RequestBody Document document) {
-        return new ResponseEntity<>(documentService.save(document), HttpStatus.OK);
+    public ResponseEntity<Void> createNewDocument(@RequestBody Document document) {
+        document.setAuthor(document.getAuthor());
+        documentService.save(document);
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -57,9 +64,9 @@ public class DocumentController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Document> deleteDocument(@PathVariable Long id) {
         Optional<Document> DocumentOptional = documentService.findById(id);
-        return DocumentOptional.map(Document -> {
+        return DocumentOptional.map(document -> {
             documentService.remove(id);
-            return new ResponseEntity<>(Document, HttpStatus.OK);
+            return new ResponseEntity<>(document, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
