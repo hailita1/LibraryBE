@@ -47,6 +47,7 @@ public class DocumentController {
         Date now = new Date();
         return documentOptional.map(document1 -> {
             document1.setId(document.getId());
+            document1.setName(document.getName());
             document1.setPublishingYear(document.getPublishingYear());
             document1.setPageNumber(document.getPageNumber());
             document1.setVisitNumber(document.getVisitNumber());
