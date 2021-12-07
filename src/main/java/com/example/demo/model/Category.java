@@ -18,7 +18,6 @@ public class Category {
     @Column
     private String image;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_topic")
     private Topic topic;

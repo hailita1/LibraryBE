@@ -27,7 +27,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategory(@RequestBody Long id) {
+    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
         Optional<Category> categoryOptional = categoryService.findById(id);
         return categoryOptional.map(category -> new ResponseEntity<>(category, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
