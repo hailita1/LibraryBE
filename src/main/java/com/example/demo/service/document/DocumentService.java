@@ -25,7 +25,11 @@ public class DocumentService implements IDocumentService {
 
     @Override
     public Document save(Document document) {
-        return documentRepository.save(document);
+        try{
+            return documentRepository.save(document);
+        } catch (Exception ex){
+            throw ex;
+        }
     }
 
     @Override
