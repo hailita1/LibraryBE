@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Category;
 import com.example.demo.model.Document;
 import com.example.demo.service.document.IDocumentService;
 import lombok.extern.slf4j.Slf4j;
@@ -74,5 +75,10 @@ public class DocumentController {
     public ResponseEntity deleteListCategory(@RequestBody List<Long> id) {
         documentService.deleteList(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/findCategories")
+    public ResponseEntity findByCategory(@RequestBody Category category) {
+        return new ResponseEntity<>(  documentService.findAllByCategory(category), HttpStatus.OK);
     }
 }

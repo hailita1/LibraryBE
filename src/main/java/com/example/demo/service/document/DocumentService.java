@@ -1,5 +1,6 @@
 package com.example.demo.service.document;
 
+import com.example.demo.model.Category;
 import com.example.demo.model.Document;
 import com.example.demo.repository.IDocumentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,10 @@ public class DocumentService implements IDocumentService {
                 documentRepository.deleteById(model.get(i));
             }
         }
+    }
+
+    @Override
+    public Iterable<Document> findAllByCategory(Category category) {
+        return documentRepository.findAllByCategory(category);
     }
 }
