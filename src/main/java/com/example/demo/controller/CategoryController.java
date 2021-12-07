@@ -42,6 +42,7 @@ public class CategoryController {
             category1.setId(category.getId());
             category1.setName(category.getName());
             category1.setTopic(category.getTopic());
+            category1.setImage(category.getImage());
             return new ResponseEntity<>(categoryService.save(category1), HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
