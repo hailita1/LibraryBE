@@ -1,6 +1,7 @@
 package com.example.demo.service.category;
 
 import com.example.demo.model.Category;
+import com.example.demo.model.Topic;
 import com.example.demo.repository.ICategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,10 @@ public class CategoryService implements ICategoryService {
                 categoryRepository.deleteById(model.get(i));
             }
         }
+    }
+
+    @Override
+    public Iterable<Category> findAllByTopic(Topic topic) {
+        return categoryRepository.findAllByTopic(topic);
     }
 }

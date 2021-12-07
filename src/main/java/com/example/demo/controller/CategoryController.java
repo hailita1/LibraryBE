@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Category;
+import com.example.demo.model.Topic;
 import com.example.demo.service.category.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class CategoryController {
     @Autowired
     private ICategoryService categoryService;
+
     @GetMapping
     public ResponseEntity<Iterable<Category>> getAllCategory() {
         return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
@@ -57,5 +59,10 @@ public class CategoryController {
             categoryService.remove(id);
             return new ResponseEntity<>(category, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/findTopics")
+    public ResponseEntity findByTopic(@RequestBody Topic topic) {
+        return new ResponseEntity<>(categoryService.findAllByTopic(topic), HttpStatus.OK);
     }
 }
