@@ -40,6 +40,9 @@ public class Document {
     private Date update_At;
 
     @Column
+    private Date create_At;
+
+    @Column
     private String fileName;
 
     @Column

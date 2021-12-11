@@ -26,9 +26,9 @@ public class DocumentService implements IDocumentService {
 
     @Override
     public Document save(Document document) {
-        try{
+        try {
             return documentRepository.save(document);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             throw ex;
         }
     }
@@ -50,5 +50,20 @@ public class DocumentService implements IDocumentService {
     @Override
     public Iterable<Document> findAllByCategory(Category category) {
         return documentRepository.findAllByCategory(category);
+    }
+
+    @Override
+    public Iterable<Document> findByOrderByIdDesc() {
+        return documentRepository.findByOrderByIdDesc();
+    }
+
+    @Override
+    public Iterable<Document> findByOrderByVisitNumberDesc() {
+        return documentRepository.findByOrderByVisitNumberDesc();
+    }
+
+    @Override
+    public Iterable<Document> findAllByNameContainingAndOrderByVisitNumberDesc(String name) {
+        return documentRepository.findAllByNameContainingOrderByVisitNumberDesc(name);
     }
 }

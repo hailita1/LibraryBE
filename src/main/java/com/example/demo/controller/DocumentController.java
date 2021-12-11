@@ -24,12 +24,18 @@ public class DocumentController {
 
     @GetMapping
     public ResponseEntity<Iterable<Document>> getAllDocument() {
-        return new ResponseEntity<>(documentService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(documentService.findByOrderByIdDesc(), HttpStatus.OK);
+    }
+
+    @GetMapping("/visitNumber")
+    public ResponseEntity<Iterable<Document>> getAllDocumentVisitNumberDesc() {
+        return new ResponseEntity<>(documentService.findByOrderByVisitNumberDesc(), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Void> createNewDocument(@RequestBody Document document) {
         document.setAuthor(document.getAuthor());
+        document.setCreate_At(new Date());
         documentService.save(document);
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -79,6 +85,11 @@ public class DocumentController {
 
     @PostMapping("/findCategories")
     public ResponseEntity findByCategory(@RequestBody Category category) {
-        return new ResponseEntity<>(  documentService.findAllByCategory(category), HttpStatus.OK);
+        return new ResponseEntity<>(documentService.findAllByCategory(category), HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Iterable<Document>> getAllDocumentByName(@RequestParam(name = "name") String name) {
+        return new ResponseEntity<>(documentService.findAllByNameContainingAndOrderByVisitNumberDesc(name), HttpStatus.OK);
     }
 }

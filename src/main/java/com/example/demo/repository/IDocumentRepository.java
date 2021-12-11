@@ -8,4 +8,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IDocumentRepository extends JpaRepository<Document, Long> {
     Iterable<Document> findAllByCategory(Category category);
+
+    Iterable<Document> findByOrderByIdDesc();
+
+    Iterable<Document> findByOrderByVisitNumberDesc();
+
+    Iterable<Document> findAllByNameContainingOrderByVisitNumberDesc(String name);
 }
