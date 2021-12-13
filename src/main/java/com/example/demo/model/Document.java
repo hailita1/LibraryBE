@@ -37,6 +37,9 @@ public class Document {
     private Long visitNumber;
 
     @Column
+    private Long workPlace;
+
+    @Column
     private Date update_At;
 
     @Column
