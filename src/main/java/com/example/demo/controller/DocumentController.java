@@ -62,6 +62,7 @@ public class DocumentController {
             document1.setImage(document.getImage());
             document1.setCategory(document.getCategory());
             document1.setAuthor(document.getAuthor());
+            document1.setMainAuthor(document.getMainAuthor());
             document1.setPublishingCompany(document.getPublishingCompany());
             document1.setUpdate_At(now);
             return new ResponseEntity<>(documentService.save(document1), HttpStatus.OK);
