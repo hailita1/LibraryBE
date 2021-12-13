@@ -55,6 +55,7 @@ public class AuthController {
         if (user.getAvt() == null) {
             user.setAvt("https://firebasestorage.googleapis.com/v0/b/demoupload-d290c.appspot.com/o/avatar.jpg?alt=media&token=9ac8b329-207a-4c5b-9581-98d5269b160d");
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -78,6 +79,7 @@ public class AuthController {
         return userOptional.map(user1 -> {
             user1.setId(user1.getId());
             user1.setEmail(user.getEmail());
+            user1.setPhone(user.getPhone());
             user1.setFullName(user.getFullName());
             user1.setAvt(user.getAvt());
             userService.save(user1);
