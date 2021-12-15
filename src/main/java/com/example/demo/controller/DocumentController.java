@@ -36,6 +36,9 @@ public class DocumentController {
     public ResponseEntity<Void> createNewDocument(@RequestBody Document document) {
         document.setAuthor(document.getAuthor());
         document.setCreate_At(new Date());
+        if (document.getImage() == null || document.getImage().equals("")) {
+            document.setImage("defaul.jpg");
+        }
         documentService.save(document);
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);

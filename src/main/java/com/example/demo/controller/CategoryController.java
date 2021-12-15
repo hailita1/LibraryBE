@@ -25,6 +25,9 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<Category> createNewCategory(@RequestBody Category category) {
+        if (category.getImage() == null || category.getImage().equals("")) {
+            category.setImage("defaul.jpg");
+        }
         return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
     }
 
