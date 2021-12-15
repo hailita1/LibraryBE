@@ -22,7 +22,7 @@ public class User {
     private String fullName;
 
     @Column
-    private Boolean gender;
+    private String gender;
 
     @Column(unique = true)
     private String email;
@@ -36,17 +36,11 @@ public class User {
     @Column
     private String catalog;
 
-    @Column
-    private String status;
-
     @Column(unique = true)
     private String studentCode;
 
     @Column
     private String avt;
-
-    @Column(unique = true)
-    private String idCard;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",

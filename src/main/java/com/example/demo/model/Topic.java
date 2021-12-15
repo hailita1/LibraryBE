@@ -16,9 +16,6 @@ public class Topic {
     @Column
     private String name;
 
-    @Column
-    private Boolean status;
-
     @JsonBackReference
     @OneToMany(mappedBy = "topic", cascade = CascadeType.REMOVE)
     private List<Category> categories;

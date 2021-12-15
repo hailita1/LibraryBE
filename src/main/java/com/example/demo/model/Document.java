@@ -31,9 +31,6 @@ public class Document {
     private String pageNumber;
 
     @Column
-    private Boolean status;
-
-    @Column
     private Long visitNumber;
 
     @Column
