@@ -55,7 +55,14 @@ public class AuthController {
         if (user.getAvt() == null) {
             user.setAvt("defaul.jpg");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getCatalog().equals("Sinh viên")) {
+            user.setUserName(user.getStudentCode());
+        } else {
+            user.setUserName(user.getEmail());
+        }
+
+        String password = "Abcd123";
+        user.setPassword(passwordEncoder.encode(password));
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -73,14 +80,18 @@ public class AuthController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping("/accounts")
+    @PostMapping("/updateUser")
     public ResponseEntity<User> updateUser(@RequestBody User user) {
         Optional<User> userOptional = userService.findById(user.getId());
         return userOptional.map(user1 -> {
             user1.setId(user1.getId());
+            user1.setFullName(user.getFullName());
+            user1.setCatalog(user.getCatalog());
             user1.setEmail(user.getEmail());
             user1.setPhone(user.getPhone());
-            user1.setFullName(user.getFullName());
+            user1.setAddress(user.getAddress());
+            user1.setGender(user.getGender());
+            user1.setStudentCode(user.getStudentCode());
             user1.setAvt(user.getAvt());
             userService.save(user1);
             return new ResponseEntity<>(user1, HttpStatus.OK);
